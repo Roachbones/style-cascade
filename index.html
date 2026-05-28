@@ -1,5 +1,5 @@
 ---
-GRID_WIDTH: 99
+GRID_WIDTH: 50
 ---
 <!doctype html>
 <title>Style Cascade</title>
@@ -8,9 +8,9 @@ GRID_WIDTH: 99
 
 body {
     {% for d in (0..3) %}--node-xd{{ d }}:-1;{% endfor %}
-    {% for d in (0..3) %}--node-yd{{ d }}:-1;{% endfor %}
+    {% for d in (0..3) %}--no de-yd{{ d }}:-1;{% endfor %}
     --GRID-WIDTH: {{ page.GRID_WIDTH }};
-    --NODE-SIZE: .2cm;
+    --NODE-SIZE: calc(20cm / var(--GRID-WIDTH));
     --node-x: calc(var(--node-xd0) + var(--node-xd1) * 10 + var(--node-xd2) * 100);
     --node-y: calc(var(--node-yd0) + var(--node-yd1) * 10 + var(--node-yd2) * 100);
 }
@@ -28,12 +28,19 @@ aside {
     position: absolute;
     left: calc(var(--node-x) * var(--NODE-SIZE));
     top: calc(var(--node-y) * var(--NODE-SIZE));
-    transition: all .5s;
+    body:has(.fast:checked) & { transition: all .5s; }
+    body:has(.slow:checked) & { transition: all 5s; }
 }
 
 .n {
+    position: relative;
     &, & > input { width: var(--NODE-SIZE); height: var(--NODE-SIZE); margin: 0; padding: 0;}
-    & > input { display: block; opacity: 0; }
+    & > input {
+        display: block;
+        opacity: .5;
+        position: absolute;
+        top: 0; left: 0;
+    }
     &:has(:checked) { background-color: red; }
     &:hover { background-color:grey; }
     --x: calc(var(--xd0) + var(--xd1) * 10 + var(--xd2) * 100);
@@ -43,7 +50,11 @@ aside {
     --Δx²: pow(var(--Δx), 2);
     --Δy²: pow(var(--Δy), 2);
     --Δ: sqrt(var(--Δx²) + var(--Δy²));
-    background-color: hsl(50 calc(1% * var(--Δ)) 50%);
+    --θ: atan2(var(--Δx), var(--Δy));
+    --⌊Δ⌋: round(down, var(--Δ));
+    background-color: hsl(var(--θ) calc(1% * var(--Δ)) 50%);
+    & > input.fast { z-index: calc(10000 + 5 - var(--⌊Δ⌋)); }
+    & > input.slow { z-index: calc(10000 + var(--⌊Δ⌋) - 5); filter: sepia() saturate(9999);}
 }
 
 
@@ -60,7 +71,10 @@ hr.y { width: calc(1px * var(--node-y)); }
   <td class=n
 xd0={{ xp | slice: -1}} xd1={{ xp | slice: -2}} xd2={{ xp | slice: -3}}
 yd0={{ yp | slice: -1}} yd1={{ yp | slice: -2}} yd2={{ yp | slice: -3}}
-><input type=radio name=A></td>{% endfor %}
+>
+<input type=radio name=A class=fast>
+<input type=radio name=A class=slow>
+</td>{% endfor %}
  </tr>
 {% endfor %}
 </table>
