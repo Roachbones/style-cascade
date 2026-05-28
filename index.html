@@ -36,6 +36,14 @@ aside {
     & > input { display: block; opacity: 0; }
     &:has(:checked) { background-color: red; }
     &:hover { background-color:grey; }
+    --x: calc(var(--xd0) + var(--xd1) * 10 + var(--xd2) * 100);
+    --y: calc(var(--yd0) + var(--yd1) * 10 + var(--yd2) * 100);
+    --Δx: calc(var(--x) - var(--node-x));
+    --Δy: calc(var(--y) - var(--node-y));
+    --Δx²: pow(var(--Δx), 2);
+    --Δy²: pow(var(--Δy), 2);
+    --Δ: sqrt(var(--Δx²) + var(--Δy²));
+    background-color: hsl(50 calc(1% * var(--Δ)) 50%);
 }
 
 
