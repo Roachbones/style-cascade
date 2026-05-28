@@ -5,4 +5,4 @@
 {% for i in (0..1) %}{% capture xy %}{% cycle "x", "y" %}{% endcapture %}
 {% for d in (0..2) %}
 {% for i in (0..9) %}
-body:has(td[{{ xy }}d{{ d }}="{{ i }}"]:hover){--node-{{ xy }}d{{ d }}:{{ i }}}{% endfor %}{% endfor %}{% endfor %}
+body:has(td[{{ xy }}d{{ d }}="{{ i }}"] > :checked){--node-{{ xy }}d{{ d }}:{{ i }}}{% endfor %}{% endfor %}{% endfor %}

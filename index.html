@@ -1,5 +1,5 @@
 ---
-GRID_WIDTH: 60
+GRID_WIDTH: 99
 ---
 <!doctype html>
 <title>Style Cascade</title>
@@ -9,20 +9,32 @@ GRID_WIDTH: 60
 body {
     {% for d in (0..3) %}--node-xd{{ d }}:-1;{% endfor %}
     {% for d in (0..3) %}--node-yd{{ d }}:-1;{% endfor %}
-    --GRID_WIDTH: {{ page.GRID_WIDTH }};
+    --GRID-WIDTH: {{ page.GRID_WIDTH }};
+    --NODE-SIZE: .2cm;
     --node-x: calc(var(--node-xd0) + var(--node-xd1) * 10 + var(--node-xd2) * 100);
     --node-y: calc(var(--node-yd0) + var(--node-yd1) * 10 + var(--node-yd2) * 100);
 }
 
+section {
+    width: max-content; margin: auto;
+    position: relative;
+}
 table {
     border: 1px solid black;
     margin: auto;
     border-spacing: 0;
 }
+aside {
+    position: absolute;
+    left: calc(var(--node-x) * var(--NODE-SIZE));
+    top: calc(var(--node-y) * var(--NODE-SIZE));
+    transition: all .5s;
+}
 
 .n {
-    width: .1cm;
-    height: .1cm;
+    &, & > input { width: var(--NODE-SIZE); height: var(--NODE-SIZE); margin: 0; padding: 0;}
+    & > input { display: block; opacity: 0; }
+    &:has(:checked) { background-color: red; }
     &:hover { background-color:grey; }
 }
 
@@ -34,27 +46,17 @@ hr.y { width: calc(1px * var(--node-y)); }
 
 <hr class=x>
 <hr class=y>
+<section>
 <table>
-{% for x in (1..page.GRID_WIDTH) %}<tr>{% for y in (1..page.GRID_WIDTH) %}{% capture xp %}0000{{ x }}{% endcapture %}{% capture yp %}0000{{ y }}{% endcapture %}{% capture i %}00000000{% increment i %}{% endcapture %}
+{% for y in (1..page.GRID_WIDTH) %}<tr>{% for x in (1..page.GRID_WIDTH) %}{% capture xp %}0000{{ x }}{% endcapture %}{% capture yp %}0000{{ y }}{% endcapture %}
   <td class=n
-    d1={{ i | slice: -1 }}
-    d2={{ i | slice: -2 }}
-    d3={{ i | slice: -3 }}
-    d4={{ i | slice: -4 }}
-    d5={{ i | slice: -5 }}
-    d6={{ i | slice: -6 }}
-    xd0={{ xp | slice: -1}}
-    xd1={{ xp | slice: -2}}
-    xd2={{ xp | slice: -3}}
-    yd0={{ yp | slice: -1}}
-    yd1={{ yp | slice: -2}}
-    yd2={{ yp | slice: -3}}
-></td>{% endfor %}
+xd0={{ xp | slice: -1}} xd1={{ xp | slice: -2}} xd2={{ xp | slice: -3}}
+yd0={{ yp | slice: -1}} yd1={{ yp | slice: -2}} yd2={{ yp | slice: -3}}
+><input type=radio name=A></td>{% endfor %}
  </tr>
 {% endfor %}
 </table>
-
+<aside>🍄</aside>
+</section>
 
 <hr>
-
-</table>
