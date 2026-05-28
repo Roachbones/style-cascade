@@ -1,0 +1,34 @@
+<!doctype html>
+<title>Style Cascade</title>
+<link rel=stylesheet href=bore.css>
+<style>
+
+body {
+    --node-i-d1:0; --node-i-d2:0; --node-i-d4:0; --node-i-d3:0;
+    --node-i: calc(var(--node-i-d1) + var(--node-i-d2) * 10 + var(--node-i-d3) * 100 + var(--node-i-d4) * 1000);
+}
+
+table {
+    border: 1px solid black;
+    margin: auto;
+}
+
+.n {
+    width: 1cm;
+    height: 1cm;
+    &:hover { background-color:grey; }
+}
+
+body:has(td[d1="2"]:hover) { background-color: lavender;}
+
+
+
+hr { width: calc(1px * var(--node-i)); }
+
+</style>
+
+<hr>
+
+<table>
+<tr><td class=n d1=0 d2=0 d3=0 d4=0></td><td class=n d1=1 d2=0 d3=0 d4=0></td><td class=n d1=2 d2=0 d3=0 d4=0></td><td class=n d1=3 d2=0 d3=0 d4=0></td><td class=n d1=4 d2=0 d3=0 d4=0></td></tr><tr><td class=n d1=5 d2=0 d3=0 d4=0></td><td class=n d1=6 d2=0 d3=0 d4=0></td><td class=n d1=7 d2=0 d3=0 d4=0></td><td class=n d1=8 d2=0 d3=0 d4=0></td><td class=n d1=9 d2=0 d3=0 d4=0></td></tr><tr><td class=n d1=0 d2=1 d3=0 d4=0></td><td class=n d1=1 d2=1 d3=0 d4=0></td><td class=n d1=2 d2=1 d3=0 d4=0></td><td class=n d1=3 d2=1 d3=0 d4=0></td><td class=n d1=4 d2=1 d3=0 d4=0></td></tr><tr><td class=n d1=5 d2=1 d3=0 d4=0></td><td class=n d1=6 d2=1 d3=0 d4=0></td><td class=n d1=7 d2=1 d3=0 d4=0></td><td class=n d1=8 d2=1 d3=0 d4=0></td><td class=n d1=9 d2=1 d3=0 d4=0></td></tr><tr><td class=n d1=0 d2=2 d3=0 d4=0></td><td class=n d1=1 d2=2 d3=0 d4=0></td><td class=n d1=2 d2=2 d3=0 d4=0></td><td class=n d1=3 d2=2 d3=0 d4=0></td><td class=n d1=4 d2=2 d3=0 d4=0></td></tr>
+</table>
