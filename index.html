@@ -7,8 +7,11 @@ GRID_WIDTH: 60
 <style>
 
 body {
-    {% for d in (0..6) %}--node-i-d{{ d }}:0;{% endfor %}
-    --node-i: calc(var(--node-i-d1) + var(--node-i-d2) * 10 + var(--node-i-d3) * 100 + var(--node-i-d4) * 1000);
+    {% for d in (0..3) %}--node-xd{{ d }}:-1;{% endfor %}
+    {% for d in (0..3) %}--node-yd{{ d }}:-1;{% endfor %}
+    --GRID_WIDTH: {{ page.GRID_WIDTH }};
+    --node-x: calc(var(--node-xd0) + var(--node-xd1) * 10 + var(--node-xd2) * 100);
+    --node-y: calc(var(--node-yd0) + var(--node-yd1) * 10 + var(--node-yd2) * 100);
 }
 
 table {
@@ -24,14 +27,29 @@ table {
 }
 
 
-hr { width: calc(1px * var(--node-i)); }
+hr.x { width: calc(1px * var(--node-x)); }
+hr.y { width: calc(1px * var(--node-y)); }
 
 </style>
 
-<hr>
+<hr class=x>
+<hr class=y>
 <table>
-{% for x in (1..page.GRID_WIDTH) %}<tr>{% for y in (1..page.GRID_WIDTH) %}{% capture i %}00000000{% increment i %}{% endcapture %}
-  <td class=n d1={{ i | slice: -1 }} d2={{ i | slice: -2 }} d3={{ i | slice: -3 }} d4={{ i | slice: -4 }} d5={{ i | slice: -5 }} d6={{ i | slice: -6 }}></td>{% endfor %}
+{% for x in (1..page.GRID_WIDTH) %}<tr>{% for y in (1..page.GRID_WIDTH) %}{% capture xp %}0000{{ x }}{% endcapture %}{% capture yp %}0000{{ y }}{% endcapture %}{% capture i %}00000000{% increment i %}{% endcapture %}
+  <td class=n
+    d1={{ i | slice: -1 }}
+    d2={{ i | slice: -2 }}
+    d3={{ i | slice: -3 }}
+    d4={{ i | slice: -4 }}
+    d5={{ i | slice: -5 }}
+    d6={{ i | slice: -6 }}
+    xd0={{ xp | slice: -1}}
+    xd1={{ xp | slice: -2}}
+    xd2={{ xp | slice: -3}}
+    yd0={{ yp | slice: -1}}
+    yd1={{ yp | slice: -2}}
+    yd2={{ yp | slice: -3}}
+></td>{% endfor %}
  </tr>
 {% endfor %}
 </table>

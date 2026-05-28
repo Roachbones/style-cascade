@@ -1,6 +1,8 @@
 ---
 ---
-{% for d in (0..6) %}{% for i in (0..9) %}
-body:has(td[d{{ d }}="{{ i }}"]:hover){--node-i-d{{ d }}:{{ i }}}{% endfor %}{% endfor %}
+/* todo use subscripts ₀₁₂ */
 
-/* body:has(td[d3="9"]:hover) {--node-i-d3: 9} */
+{% for i in (0..1) %}{% capture xy %}{% cycle "x", "y" %}{% endcapture %}
+{% for d in (0..2) %}
+{% for i in (0..9) %}
+body:has(td[{{ xy }}d{{ d }}="{{ i }}"]:hover){--node-{{ xy }}d{{ d }}:{{ i }}}{% endfor %}{% endfor %}{% endfor %}
